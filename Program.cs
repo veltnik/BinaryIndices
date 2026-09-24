@@ -43,11 +43,6 @@ namespace BinaryIndices
         [STAThread]
         static void Main()
         {
-            // Закрываем старые процессы Python, если они зависли
-            try {
-                Process.Start(new ProcessStartInfo("taskkill", "/f /im pythonw.exe") { CreateNoWindow = true, UseShellExecute = false });
-                Process.Start(new ProcessStartInfo("taskkill", "/f /im python.exe") { CreateNoWindow = true, UseShellExecute = false });
-            } catch {}
 
             ApplicationConfiguration.Initialize();
             _hookID = SetHook(_proc);
@@ -81,7 +76,7 @@ namespace BinaryIndices
                         char digit = (char)('0' + (vkCode - 48));
                         string textToSend = isShiftPressed ? subscripts[digit] : superscripts[digit];
 
-                        // Синхронно отправляем символ
+                        // отправляем символ
                         SendKeys.SendWait(textToSend);
 
                         // Возвращаем 1 — полная блокировка оригинальной цифры системой Windows
